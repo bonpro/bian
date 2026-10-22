@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đếm Ngược Thời Gian ⏳✨</title>
+    <title>Chúc Mừng Sinh Nhật Đoàn Thị Mỹ Duyên 23/10/2007 🎂✨</title>
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;700&family=Dancing+Script:wght@700&family=Mali:wght@600;700&display=swap" rel="stylesheet">
@@ -45,7 +45,6 @@
             background: linear-gradient(180deg, #ff9a9e 0%, #fecfef 50%, #a1c4fd 100%);
         }
 
-        /* CANVAS ĐỒ HỌA: SAO BĂNG & TRÁI TIM/NGÔI SAO LITI */
         #effect-canvas {
             position: fixed;
             top: 0;
@@ -56,7 +55,6 @@
             z-index: 1;
         }
 
-        /* CANVAS 3D BÁNH KEM */
         #webgl-canvas {
             position: absolute;
             top: 0;
@@ -67,7 +65,7 @@
             display: none;
         }
 
-        /* MÀN HÌNH CHỜ ĐẾM NGƯỢC / ĐĂNG NHẬP */
+        /* MÀN HÌNH ĐĂNG NHẬP CHO IPHONE */
         #login-overlay {
             position: fixed;
             top: 0;
@@ -79,19 +77,20 @@
             align-items: center;
             z-index: 1000;
             transition: opacity 0.8s ease;
+            padding: 20px;
         }
 
         .login-card {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            padding: 38px 32px;
-            border-radius: 40px;
-            box-shadow: 0 20px 50px rgba(231, 76, 120, 0.35), 0 0 30px rgba(255, 255, 255, 0.8);
+            padding: 30px 24px;
+            border-radius: 35px;
+            box-shadow: 0 20px 50px rgba(231, 76, 120, 0.35);
             border: 3px solid rgba(255, 255, 255, 0.9);
             text-align: center;
-            width: 380px;
-            max-width: 90%;
+            width: 360px;
+            max-width: 100%;
             animation: popIn 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
@@ -101,7 +100,7 @@
         }
 
         .login-badge {
-            font-size: 3.3rem;
+            font-size: 2.8rem;
             margin-bottom: 5px;
             animation: bounceCute 2s infinite ease-in-out;
             display: inline-block;
@@ -109,86 +108,85 @@
 
         @keyframes bounceCute {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-8px); }
         }
 
         .login-card h2 {
             font-family: 'Mali', cursive;
-            font-size: 1.5rem;
+            font-size: 1.45rem;
             color: #ff4d6d;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .login-card p {
-            font-size: 0.83rem;
+            font-size: 0.78rem;
             color: #723d46;
-            margin-bottom: 20px;
+            margin-bottom: 14px;
             font-weight: 500;
         }
 
-        /* ĐỒNG HỒ ĐẾM NGƯỢC CUTE */
-        .countdown-box {
+        #countdown-box {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-bottom: 10px;
+            gap: 8px;
+            margin-bottom: 15px;
         }
 
-        .time-item {
-            background: rgba(255, 77, 109, 0.1);
-            border: 2px solid #ffb3c1;
-            border-radius: 15px;
-            padding: 10px;
-            min-width: 65px;
+        .time-block {
+            background: #ff4d6d;
+            color: #fff;
+            padding: 6px 8px;
+            border-radius: 12px;
+            min-width: 55px;
+            box-shadow: 0 4px 12px rgba(255, 77, 109, 0.3);
         }
 
-        .time-number {
-            font-size: 1.4rem;
+        .time-value {
+            font-size: 1.15rem;
             font-weight: bold;
-            color: #ff4d6d;
             font-family: 'Mali', cursive;
         }
 
         .time-label {
-            font-size: 0.7rem;
-            color: #723d46;
+            font-size: 0.6rem;
             text-transform: uppercase;
-            font-weight: bold;
+            letter-spacing: 1px;
+            opacity: 0.9;
         }
 
         #pass-input {
             width: 100%;
-            padding: 14px;
-            border-radius: 22px;
+            padding: 12px;
+            border-radius: 18px;
             border: 2px solid #ffb3c1;
             background: rgba(255, 245, 247, 0.95);
             color: #ff4d6d;
             text-align: center;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             outline: none;
-            margin-bottom: 18px;
+            margin-bottom: 12px;
             font-weight: bold;
             letter-spacing: 3px;
         }
 
         .btn-submit {
             width: 100%;
-            padding: 14px;
+            padding: 12px;
             background: linear-gradient(90deg, #ff758f, #ff4d6d);
             border: none;
-            border-radius: 22px;
+            border-radius: 18px;
             color: #ffffff;
             font-weight: bold;
-            font-size: 1.05rem;
+            font-size: 0.95rem;
             cursor: pointer;
-            box-shadow: 0 8px 25px rgba(255, 77, 109, 0.4);
+            box-shadow: 0 6px 20px rgba(255, 77, 109, 0.4);
             font-family: inherit;
         }
 
         #error-msg {
             color: #ff4d6d;
-            font-size: 0.82rem;
-            margin-top: 12px;
+            font-size: 0.78rem;
+            margin-top: 8px;
             display: none;
             font-weight: bold;
         }
@@ -196,31 +194,31 @@
         /* HEADER UI & HINT BANNER */
         #ui-header {
             position: absolute;
-            top: 25px;
+            top: 20px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 10;
             text-align: center;
             pointer-events: none;
             display: none;
-            width: 90%;
+            width: 95%;
         }
 
         .header-title {
             font-family: 'Mali', cursive;
-            font-size: 2.5rem;
+            font-size: 2rem;
             color: #ffffff;
-            text-shadow: 0 0 15px rgba(255, 117, 143, 0.8), 3px 3px 0px #ff4d6d;
-            margin-bottom: 5px;
+            text-shadow: 0 0 12px rgba(255, 117, 143, 0.8), 2px 2px 0px #ff4d6d;
+            margin-bottom: 4px;
         }
 
         .header-sub {
             background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(8px);
-            padding: 6px 18px;
-            border-radius: 20px;
+            padding: 5px 14px;
+            border-radius: 15px;
             display: inline-block;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #fff;
             font-weight: bold;
             border: 1px solid rgba(255, 255, 255, 0.4);
@@ -228,33 +226,30 @@
 
         #hint-banner {
             position: absolute;
-            bottom: 30px;
+            bottom: 25px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 10;
-            background: rgba(255, 255, 255, 0.88);
+            background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);
             color: #ff4d6d;
-            padding: 10px 24px;
-            border-radius: 25px;
-            font-size: 0.88rem;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.8rem;
             font-weight: bold;
             border: 2px solid #ffccd5;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
             pointer-events: none;
             display: none;
-            animation: pulseHint 1.8s infinite;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
         }
 
-        @keyframes pulseHint {
-            0%, 100% { transform: translateX(-50%) scale(1); }
-            50% { transform: translateX(-50%) scale(1.05); }
-        }
-
-        /* KHUNG AVATAR CUTE */
+        /* AVATAR IPHONE */
         #avatar-box {
             position: absolute;
-            top: 20%;
+            top: 22%;
             left: 50%;
             transform: translateX(-50%) scale(0);
             z-index: 50;
@@ -270,15 +265,13 @@
         }
 
         .avatar-frame {
-            width: 140px;
-            height: 140px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
             border: 4px solid #ffffff;
-            box-shadow: 0 0 25px rgba(255, 117, 143, 0.8), 0 0 50px rgba(255, 77, 109, 0.5);
+            box-shadow: 0 0 25px rgba(255, 117, 143, 0.8);
             overflow: hidden;
-            margin: 0 auto 10px auto;
-            position: relative;
-            animation: wavePulse 1.5s infinite ease-in-out;
+            margin: 0 auto 8px auto;
             background: #fff;
         }
 
@@ -288,36 +281,32 @@
             object-fit: cover;
         }
 
-        @keyframes wavePulse {
-            0%, 100% { box-shadow: 0 0 20px rgba(255, 117, 143, 0.8); transform: scale(1); }
-            50% { box-shadow: 0 0 35px rgba(255, 77, 109, 1); transform: scale(1.05); }
-        }
-
         .voice-tag {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             color: #ff4d6d;
-            padding: 5px 16px;
-            border-radius: 20px;
-            font-size: 0.82rem;
+            padding: 4px 14px;
+            border-radius: 15px;
+            font-size: 0.78rem;
             font-weight: bold;
-            display: inline-block;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
-        /* BỨC THƯ */
+        /* BỨC THƯ TƯƠNG THÍCH MỌI MÀN HÌNH ĐIỆN THOẠI */
         #letter-modal {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) scale(0) rotate(-15deg);
-            width: 500px;
-            max-width: 90%;
+            transform: translate(-50%, -50%) scale(0) rotate(-10deg);
+            width: 90%;
+            max-width: 440px;
+            max-height: 85vh;
+            overflow-y: auto;
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(20px);
-            border-radius: 35px;
-            padding: 35px;
-            box-shadow: 0 0 70px rgba(255, 117, 143, 0.9), 0 25px 60px rgba(0, 0, 0, 0.5);
-            border: 4px solid #ffccd5;
+            border-radius: 30px;
+            padding: 25px;
+            box-shadow: 0 0 50px rgba(255, 117, 143, 0.8), 0 20px 40px rgba(0, 0, 0, 0.4);
+            border: 3px solid #ffccd5;
             z-index: 100;
             opacity: 0;
             pointer-events: none;
@@ -333,88 +322,85 @@
 
         .letter-modal-content h3 {
             font-family: 'Mali', cursive;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             color: #ff4d6d;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             text-align: center;
         }
 
         .letter-modal-content p {
-            font-size: 0.88rem;
-            line-height: 1.6;
-            margin-bottom: 12px;
+            font-size: 0.83rem;
+            line-height: 1.5;
+            margin-bottom: 10px;
         }
 
         .letter-signature {
             font-family: 'Dancing Script', cursive;
-            font-size: 1.5rem;
+            font-size: 1.35rem;
             color: #ff4d6d;
             text-align: right;
-            margin-top: 15px;
+            margin-top: 12px;
             font-weight: bold;
         }
 
         .close-btn {
-            margin-top: 15px;
+            margin-top: 12px;
             width: 100%;
-            padding: 12px;
+            padding: 11px;
             background: linear-gradient(90deg, #ff758f, #ff4d6d);
             color: #fff;
             border: none;
-            border-radius: 20px;
+            border-radius: 16px;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 6px 20px rgba(255, 77, 109, 0.4);
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
             font-family: inherit;
         }
     </style>
 </head>
 <body>
 
-    <!-- AUDIO FILES -->
-    <audio id="bg-music" src="nhacnen.mp3" loop></audio>
-    <audio id="voice-audio" src="giong.mp3"></audio>
+    <!-- AUDIO FILES (Dành riêng cho iPhone) -->
+    <audio id="bg-music" src="nhacnen.mp3" loop preload="auto"></audio>
+    <audio id="voice-audio" src="giong.mp3" preload="auto"></audio>
 
     <!-- NỀN BẦU TRỜI -->
     <div id="sky-bg"></div>
 
-    <!-- CANVAS HIỆU ỨNG TRÁI TIM, NGÔI SAO LITI & SAO BĂNG -->
+    <!-- CANVAS ĐỒ HỌA -->
     <canvas id="effect-canvas"></canvas>
 
-    <!-- MÀN HÌNH CHỜ ĐẾM NGƯỢC HOẶC ĐĂNG NHẬP -->
+    <!-- MÀN HÌNH ĐĂNG NHẬP IPHONE -->
     <div id="login-overlay">
         <div class="login-card">
-            <span class="login-badge" id="card-icon">⏳✨</span>
-            <h2 id="card-title">Hẹn Giờ Bí Mật</h2>
-            <p id="card-desc">Món quà đặc biệt sẽ chính thức mở sau:</p>
+            <span class="login-badge">⏰🎂</span>
+            <h2>Đếm Ngược Sinh Nhật</h2>
+            <p id="countdown-title">Mở quà vào 00:00 - 23/10/2026 ♡</p>
             
-            <!-- ĐỒNG HỒ ĐẾM NGƯỢC (HIỆN LÚC CHƯA ĐẾN GIỜ) -->
-            <div id="countdown-container" class="countdown-box">
-                <div class="time-item">
-                    <div id="days" class="time-number">00</div>
+            <div id="countdown-box">
+                <div class="time-block">
+                    <div id="days" class="time-value">00</div>
                     <div class="time-label">Ngày</div>
                 </div>
-                <div class="time-item">
-                    <div id="hours" class="time-number">00</div>
+                <div class="time-block">
+                    <div id="hours" class="time-value">00</div>
                     <div class="time-label">Giờ</div>
                 </div>
-                <div class="time-item">
-                    <div id="minutes" class="time-number">00</div>
+                <div class="time-block">
+                    <div id="minutes" class="time-value">00</div>
                     <div class="time-label">Phút</div>
                 </div>
-                <div class="time-item">
-                    <div id="seconds" class="time-number">00</div>
+                <div class="time-block">
+                    <div id="seconds" class="time-value">00</div>
                     <div class="time-label">Giây</div>
                 </div>
             </div>
 
-            <!-- KHUNG NHẬP MẬT KHẨU (ẨN CHO ĐẾN KHI ĐÚNG GIỜ MỚI BẬT RA) -->
-            <div id="password-section" style="display: none;">
-                <input type="password" id="pass-input" placeholder="Nhập mật khẩu..." autofocus>
-                <button class="btn-submit" onclick="unlock()">Mở Thiệp Ngay ✨</button>
+            <div id="pass-container" style="opacity: 0.4; pointer-events: none;">
+                <input type="password" id="pass-input" placeholder="Đang khóa..." disabled>
+                <button class="btn-submit" id="submit-btn" disabled onclick="unlock()">Mở Thiệp Ngay ✨</button>
+                <div id="error-msg">Mật khẩu chưa đúng rồi! (Gợi ý: 23102007)</div>
             </div>
-
-            <div id="error-msg">Mật khẩu chưa đúng rồi! (Gợi ý: 23102007)</div>
         </div>
     </div>
 
@@ -441,7 +427,7 @@
     <!-- BỨC THƯ -->
     <div id="letter-modal">
         <div class="letter-modal-content">
-            <h3>Gửi Chị 💕</h3>
+            <h3>Gửi Chị Đoàn Thị Mỹ Duyên! 💕</h3>
             <p>
                 Chắc hẳn chị vừa nghe xong những lời chia sẻ từ đáy lòng của em rồi đúng không nào? 🥰
             </p>
@@ -454,44 +440,53 @@
             <p>
                 Dù sao đi nữa, hãy nhớ rằng phía sau chị luôn có sự ủng hộ, đồng hành và những tình cảm ấm áp nhất. Chúc chị tuổi mới thật vững vàng, tràn ngập may mắn và gặt hái trọn vẹn những giấc mơ của mình! ✨✨
             </p>
-            <div class="letter-signature">người gửi giấu tên</div>
+            <div class="letter-signature">Thân gửi từ em ✨💖</div>
             <button class="close-btn" onclick="closeModal()">🔄 Ngắm Lại Bánh Kem 3D</button>
         </div>
     </div>
 
     <script>
-        const fxCanvas = document.getElementById("effect-canvas");
-        const fxCtx = fxCanvas.getContext("2d");
-        const skyBg = document.getElementById("sky-bg");
+        // KÍCH HOẠT ÂM THANH CHO IPHONE NGAY KHI CÓ CHẠM ĐẦU TIÊN
+        const bgMusic = document.getElementById("bg-music");
+        const voiceAudio = document.getElementById("voice-audio");
 
-        let width = fxCanvas.width = window.innerWidth;
-        let height = fxCanvas.height = window.innerHeight;
+        window.addEventListener('touchstart', function unlockAudioForIOS() {
+            bgMusic.play().then(() => {
+                bgMusic.pause();
+                bgMusic.currentTime = 0;
+            }).catch(()=>{});
+            voiceAudio.play().then(() => {
+                voiceAudio.pause();
+                voiceAudio.currentTime = 0;
+            }).catch(()=>{});
+            window.removeEventListener('touchstart', unlockAudioForIOS);
+        }, { once: true });
 
-        window.addEventListener("resize", () => {
-            width = fxCanvas.width = window.innerWidth;
-            height = fxCanvas.height = window.innerHeight;
-        });
-
-        let shootingStars = [];
-        let cuteParticles = []; 
-        let isEffectActive = false;
-        let isFormingLetter = false;
-        let fireworksInterval = null;
-
-        // THỜI GIAN MỞ KHÓA: 00:00 ngày 23/10/2026
-        const targetTime = new Date("2026-10-23T00:00:00").getTime();
+        // ĐỒNG HỒ ĐẾM NGƯỢC ĐẾN 00:00 NGÀY 23/10/2026
+        const targetDate = new Date("October 23, 2026 00:00:00").getTime();
+        let isTimeUp = false;
 
         function updateCountdown() {
             const now = new Date().getTime();
-            const distance = targetTime - now;
+            const distance = targetDate - now;
 
-            if (distance <= 0) {
-                // ĐÃ ĐẾN GIỜ: Ẩn đồng hồ, chuyển đổi giao diện sang khung đăng nhập sinh nhật
-                document.getElementById("countdown-container").style.display = "none";
-                document.getElementById("password-section").style.display = "block";
-                document.getElementById("card-icon").innerText = "🎀🎂";
-                document.getElementById("card-title").innerText = "Ghé Thăm Sinh Nhật";
-                document.getElementById("card-desc").innerText = "Nhập mật khẩu ngày sinh để mở quà nha ♡";
+            if (distance < 0) {
+                if (!isTimeUp) {
+                    isTimeUp = true;
+                    document.getElementById("countdown-title").innerText = "✨ Đã đến giờ! Nhập mật khẩu mở quà nào! ✨";
+                    document.getElementById("days").innerText = "00";
+                    document.getElementById("hours").innerText = "00";
+                    document.getElementById("minutes").innerText = "00";
+                    document.getElementById("seconds").innerText = "00";
+                    
+                    const passContainer = document.getElementById("pass-container");
+                    passContainer.style.opacity = "1";
+                    passContainer.style.pointerEvents = "auto";
+                    
+                    const passInput = document.getElementById("pass-input");
+                    passInput.disabled = false;
+                    passInput.placeholder = "Nhập mật khẩu...";
+                }
                 return;
             }
 
@@ -509,19 +504,35 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // 1. Sao băng rực rỡ
+        // HIỆU ỨNG NỀN
+        const fxCanvas = document.getElementById("effect-canvas");
+        const fxCtx = fxCanvas.getContext("2d");
+        const skyBg = document.getElementById("sky-bg");
+
+        let width = fxCanvas.width = window.innerWidth;
+        let height = fxCanvas.height = window.innerHeight;
+
+        window.addEventListener("resize", () => {
+            width = fxCanvas.width = window.innerWidth;
+            height = fxCanvas.height = window.innerHeight;
+        });
+
+        let shootingStars = [];
+        let cuteParticles = [];
+        let isEffectActive = false;
+        let isFormingLetter = false;
+        let fireworksInterval = null;
+
         class FastShootingStar {
-            constructor() {
-                this.reset();
-            }
+            constructor() { this.reset(); }
             reset() {
                 this.x = Math.random() * width * 1.5;
                 this.y = -50;
-                this.length = Math.random() * 120 + 70;
-                this.speed = Math.random() * 14 + 10;
+                this.length = Math.random() * 100 + 60;
+                this.speed = Math.random() * 12 + 8;
                 this.angle = Math.PI / 4;
                 this.opacity = Math.random() * 0.9 + 0.1;
-                this.size = Math.random() * 2.2 + 1.2;
+                this.size = Math.random() * 2 + 1;
             }
             update() {
                 this.x += Math.cos(this.angle) * this.speed;
@@ -534,7 +545,7 @@
                 fxCtx.lineWidth = this.size;
                 fxCtx.lineCap = "round";
                 fxCtx.shadowColor = "#ffffff";
-                fxCtx.shadowBlur = 15;
+                fxCtx.shadowBlur = 10;
                 fxCtx.beginPath();
                 fxCtx.moveTo(this.x, this.y);
                 fxCtx.lineTo(this.x - Math.cos(this.angle) * this.length, this.y - Math.sin(this.angle) * this.length);
@@ -543,21 +554,18 @@
             }
         }
 
-        // 2. Các hạt liti dạng trái tim & ngôi sao
         class CuteParticle {
-            constructor() {
-                this.reset();
-            }
+            constructor() { this.reset(); }
             reset() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
-                this.targetX = width / 2 + (Math.random() - 0.5) * 220;
-                this.targetY = height / 2 + (Math.random() - 0.5) * 140;
+                this.targetX = width / 2 + (Math.random() - 0.5) * 180;
+                this.targetY = height / 2 + (Math.random() - 0.5) * 100;
                 this.symbol = Math.random() > 0.5 ? '💖' : '✨';
-                this.size = Math.random() * 14 + 12;
-                this.speedX = (Math.random() - 0.5) * 1.2;
-                this.speedY = Math.random() * 1.5 + 0.8;
-                this.speedGather = Math.random() * 14 + 10;
+                this.size = Math.random() * 12 + 10;
+                this.speedX = (Math.random() - 0.5) * 1;
+                this.speedY = Math.random() * 1.2 + 0.6;
+                this.speedGather = Math.random() * 12 + 8;
                 this.opacity = Math.random() * 0.8 + 0.2;
             }
             update() {
@@ -586,8 +594,8 @@
             }
         }
 
-        for (let i = 0; i < 25; i++) shootingStars.push(new FastShootingStar());
-        for (let i = 0; i < 45; i++) cuteParticles.push(new CuteParticle());
+        for (let i = 0; i < 20; i++) shootingStars.push(new FastShootingStar());
+        for (let i = 0; i < 35; i++) cuteParticles.push(new CuteParticle());
 
         function drawEffectsLoop() {
             fxCtx.clearRect(0, 0, width, height);
@@ -599,16 +607,13 @@
         }
         drawEffectsLoop();
 
-        // 3D BÁNH KEM THREE.JS
+        // 3D BÁNH KEM
         let scene, camera, renderer, controls;
         let cakeGroup, particlesGroup;
         let flameMeshes = [];
         let cakeMeshes = [];
         let isWaiting10s = false;
         let isExploded = false;
-
-        const bgMusic = document.getElementById("bg-music");
-        const voiceAudio = document.getElementById("voice-audio");
 
         function init3D() {
             const canvas = document.getElementById("webgl-canvas");
@@ -637,7 +642,6 @@
             cakeGroup.position.y = -1.2;
             scene.add(cakeGroup);
 
-            // Đế đĩa
             const plateGeo = new THREE.CylinderGeometry(2.3, 2.1, 0.12, 32);
             const plateMat = new THREE.MeshPhongMaterial({ color: 0xffffff, shininess: 90 });
             const plate = new THREE.Mesh(plateGeo, plateMat);
@@ -645,7 +649,6 @@
             cakeGroup.add(plate);
             cakeMeshes.push(plate);
 
-            // Tầng 1
             const tier1Geo = new THREE.CylinderGeometry(1.9, 1.9, 0.8, 32);
             const tier1Mat = new THREE.MeshPhongMaterial({ color: 0xffa8ba, shininess: 60 });
             const tier1 = new THREE.Mesh(tier1Geo, tier1Mat);
@@ -653,7 +656,6 @@
             cakeGroup.add(tier1);
             cakeMeshes.push(tier1);
 
-            // Tầng 2
             const tier2Geo = new THREE.CylinderGeometry(1.35, 1.35, 0.75, 32);
             const tier2Mat = new THREE.MeshPhongMaterial({ color: 0xfff0f3, shininess: 70 });
             const tier2 = new THREE.Mesh(tier2Geo, tier2Mat);
@@ -661,7 +663,6 @@
             cakeGroup.add(tier2);
             cakeMeshes.push(tier2);
 
-            // Tầng 3
             const tier3Geo = new THREE.CylinderGeometry(1.05, 1.05, 0.65, 32);
             const tier3Mat = new THREE.MeshPhongMaterial({ color: 0xff758f, shininess: 80 });
             const tier3 = new THREE.Mesh(tier3Geo, tier3Mat);
@@ -671,7 +672,6 @@
 
             addDecorationsToTiers();
 
-            // Dòng chữ trên bánh
             const nameTopCanvas = document.createElement('canvas');
             nameTopCanvas.width = 512;
             nameTopCanvas.height = 512;
@@ -689,12 +689,7 @@
 
             const nameTopTexture = new THREE.CanvasTexture(nameTopCanvas);
             const nameTopGeo = new THREE.PlaneGeometry(1.8, 1.8);
-            const nameTopMat = new THREE.MeshBasicMaterial({ 
-                map: nameTopTexture, 
-                transparent: true, 
-                depthWrite: false 
-            });
-            
+            const nameTopMat = new THREE.MeshBasicMaterial({ map: nameTopTexture, transparent: true, depthWrite: false });
             const nameTopMesh = new THREE.Mesh(nameTopGeo, nameTopMat);
             nameTopMesh.rotation.x = -Math.PI / 2;
             nameTopMesh.position.set(0, 2.31, 0);
@@ -720,7 +715,6 @@
                 cakeGroup.add(cream);
                 cakeMeshes.push(cream);
             }
-
             for (let i = 0; i < 12; i++) {
                 const angle = (i / 12) * Math.PI * 2;
                 const creamGeo = new THREE.SphereGeometry(0.07, 12, 12);
@@ -735,17 +729,13 @@
         function createCandleRing() {
             const candleCount = 8;
             const radius = 0.85;
-
             for (let i = 0; i < candleCount; i++) {
                 const angle = (i / candleCount) * Math.PI * 2;
                 const x = Math.cos(angle) * radius;
                 const z = Math.sin(angle) * radius;
 
                 const candleGeo = new THREE.CylinderGeometry(0.035, 0.035, 0.5, 12);
-                const candleMat = new THREE.MeshPhongMaterial({ 
-                    color: i % 2 === 0 ? 0xffc2d1 : 0xffe6a7, 
-                    shininess: 80 
-                });
+                const candleMat = new THREE.MeshPhongMaterial({ color: i % 2 === 0 ? 0xffc2d1 : 0xffe6a7, shininess: 80 });
                 const candle = new THREE.Mesh(candleGeo, candleMat);
                 candle.position.set(x, 2.55, z);
                 cakeGroup.add(candle);
@@ -764,7 +754,7 @@
         function createParticles() {
             particlesGroup = new THREE.Group();
             const pGeo = new THREE.BufferGeometry();
-            const count = 250;
+            const count = 200;
             const positions = new Float32Array(count * 3);
             const targetPositions = new Float32Array(count * 3);
 
@@ -773,34 +763,33 @@
                 positions[i * 3 + 1] = Math.random() * 2;
                 positions[i * 3 + 2] = (Math.random() - 0.5) * 2;
 
-                targetPositions[i * 3] = (Math.random() - 0.5) * 14;
-                targetPositions[i * 3 + 1] = (Math.random() - 0.5) * 14;
-                targetPositions[i * 3 + 2] = (Math.random() - 0.5) * 14;
+                targetPositions[i * 3] = (Math.random() - 0.5) * 12;
+                targetPositions[i * 3 + 1] = (Math.random() - 0.5) * 12;
+                targetPositions[i * 3 + 2] = (Math.random() - 0.5) * 12;
             }
 
             pGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
             pGeo.setAttribute('targetPos', new THREE.BufferAttribute(targetPositions, 3));
 
-            const pMat = new THREE.PointsMaterial({
-                size: 0.16,
-                color: 0xff758f,
-                transparent: true,
-                opacity: 0
-            });
-
+            const pMat = new THREE.PointsMaterial({ size: 0.15, color: 0xff758f, transparent: true, opacity: 0 });
             const pSystem = new THREE.Points(pGeo, pMat);
             particlesGroup.add(pSystem);
             scene.add(particlesGroup);
         }
 
-        // TƯƠNG TÁC CHẠM BÁNH KEM
         function onCakeTouch(event) {
             if (isWaiting10s || isExploded) return;
 
             const raycaster = new THREE.Raycaster();
             const mouse = new THREE.Vector2();
-            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            
+            // Xử lý tọa độ chạm chuẩn xác trên điện thoại
+            const clientX = event.clientX || (event.touches && event.touches[0].clientX);
+            const clientY = event.clientY || (event.touches && event.touches[0].clientY);
+            if (clientX === undefined) return;
+
+            mouse.x = (clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(clientY / window.innerHeight) * 2 + 1;
 
             raycaster.setFromCamera(mouse, camera);
             const intersects = raycaster.intersectObjects(cakeMeshes);
@@ -855,6 +844,7 @@
             isEffectActive = true;
             skyBg.style.background = `linear-gradient(180deg, #1d3557 0%, #457b9d 50%, #2b1055 100%)`;
 
+            // Phát nhạc và giọng nói tương thích iPhone
             bgMusic.volume = 0.25;
             bgMusic.play().catch(() => {});
 
@@ -876,18 +866,18 @@
                     if (fireworksInterval) clearInterval(fireworksInterval);
                     fireworksInterval = setInterval(() => {
                         confetti({
-                            particleCount: 50,
+                            particleCount: 40,
                             angle: 60,
-                            spread: 120,
+                            spread: 100,
                             origin: { x: 0, y: 0.7 },
-                            colors: ['#ff758f', '#ff4d6d', '#ffffff', '#ffd166', '#a1c4fd', '#ff6b6b']
+                            colors: ['#ff758f', '#ff4d6d', '#ffffff', '#ffd166', '#a1c4fd']
                         });
                         confetti({
-                            particleCount: 50,
+                            particleCount: 40,
                             angle: 120,
-                            spread: 120,
+                            spread: 100,
                             origin: { x: 1, y: 0.7 },
-                            colors: ['#ff758f', '#ff4d6d', '#ffffff', '#ffd166', '#a1c4fd', '#ff6b6b']
+                            colors: ['#ff758f', '#ff4d6d', '#ffffff', '#ffd166', '#a1c4fd']
                         });
                     }, 350);
                 }, 900);
@@ -928,8 +918,9 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         }
 
-        // ĐĂNG NHẬP (Mật khẩu: 23102007)
         function unlock() {
+            if (!isTimeUp) return;
+
             const pass = document.getElementById("pass-input").value;
             const errorMsg = document.getElementById("error-msg");
 
@@ -944,11 +935,13 @@
                     init3D();
                 }, 800);
             } else {
-                errorMsg.innerText = "Mật khẩu chưa đúng rồi! (Gợi ý: 23102007)";
                 errorMsg.style.display = "block";
-                gsap.fromTo("#pass-input", { x: -10 }, { x: 10, duration: 0.1, repeat: 3, yoyo: true });
             }
         }
+
+        document.getElementById("pass-input").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") unlock();
+        });
     </script>
 </body>
 </html>
