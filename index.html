@@ -183,6 +183,7 @@
             box-shadow: 0 6px 20px rgba(255, 77, 109, 0.4);
             font-family: inherit;
             display: block;
+            touch-action: manipulation;
         }
 
         .btn-submit:active {
@@ -361,6 +362,7 @@
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
             font-family: inherit;
+            touch-action: manipulation;
         }
     </style>
 </head>
@@ -772,7 +774,7 @@
             scene.add(particlesGroup);
         }
 
-        // CHỈ KHI CHẠM VÀO BÁNH KEM MỚI BẮT ĐẦU ĐẾM 10S
+        // CHẠM BÁNH KEM ĐỢI 10S
         function onCakeTouch(event) {
             if (isWaiting10s || isExploded) return;
 
@@ -810,7 +812,7 @@
                         hintBanner.innerText = `✨ Đợi ${timeLeft}s để điều kỳ diệu xuất hiện nha... ✨`;
                     } else {
                         clearInterval(countInterval);
-                        triggerExplosionAndAudio(); // ĐỦ 10S MỚI BẮT ĐẦU PHÁT ÂM THANH!
+                        triggerExplosionAndAudio(); // ĐỦ 10S MỚI PHÁT ÂM THANH
                     }
                 }, 1000);
             }
@@ -839,7 +841,6 @@
             isEffectActive = true;
             skyBg.style.background = `linear-gradient(180deg, #1d3557 0%, #457b9d 50%, #2b1055 100%)`;
 
-            // ĐÚNG 10 GIÂY MỚI PHÁT NHẠC VÀ GIỌNG NÓI!
             bgMusic.volume = 0.25;
             bgMusic.play().catch(() => {});
 
@@ -913,7 +914,7 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         }
 
-        // ĐĂNG NHẬP (23102007)
+        // HÀM MỞ KHÓA KHI BẤM NÚT (TỐI ƯU CHO CẢ IPHONE & ANDROID/LAPTOP)
         function unlock() {
             if (!isTimeUp) return;
 
@@ -935,13 +936,11 @@
             }
         }
 
-        // BẮT CẢ SỰ KIỆN NÚT BẤM VÀ CẢM ỨNG MÀN HÌNH ĐIỆN THOẠI
+        // BẮT SỰ KIỆN NÚT BẤM CHUẨN XÁC CHO MỌI THIẾT BỊ DI ĐỘNG
         const submitBtn = document.getElementById("submit-btn");
-        submitBtn.addEventListener("click", unlock);
-        submitBtn.addEventListener("touchstart", function(e) {
-            e.preventDefault();
+        submitBtn.onclick = function() {
             unlock();
-        });
+        };
 
         document.getElementById("pass-input").addEventListener("keypress", function(event) {
             if (event.key === "Enter") unlock();
