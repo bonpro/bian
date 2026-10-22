@@ -65,7 +65,7 @@
             display: none;
         }
 
-        /* MÀN HÌNH ĐĂNG NHẬP CHO IPHONE */
+        /* MÀN HÌNH ĐĂNG NHẬP */
         #login-overlay {
             position: fixed;
             top: 0;
@@ -246,7 +246,7 @@
             max-width: 400px;
         }
 
-        /* AVATAR IPHONE */
+        /* AVATAR */
         #avatar-box {
             position: absolute;
             top: 22%;
@@ -291,7 +291,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
-        /* BỨC THƯ TƯƠNG THÍCH MỌI MÀN HÌNH ĐIỆN THOẠI */
+        /* BỨC THƯ */
         #letter-modal {
             position: absolute;
             top: 50%;
@@ -360,17 +360,15 @@
 </head>
 <body>
 
-    <!-- AUDIO FILES (Dành riêng cho iPhone) -->
+    <!-- AUDIO FILES -->
     <audio id="bg-music" src="nhacnen.mp3" loop preload="auto"></audio>
     <audio id="voice-audio" src="giong.mp3" preload="auto"></audio>
 
     <!-- NỀN BẦU TRỜI -->
     <div id="sky-bg"></div>
-
-    <!-- CANVAS ĐỒ HỌA -->
     <canvas id="effect-canvas"></canvas>
 
-    <!-- MÀN HÌNH ĐĂNG NHẬP IPHONE -->
+    <!-- MÀN HÌNH ĐĂNG NHẬP -->
     <div id="login-overlay">
         <div class="login-card">
             <span class="login-badge">⏰🎂</span>
@@ -416,7 +414,7 @@
     <!-- HƯỚNG DẪN TƯƠNG TÁC -->
     <div id="hint-banner">👆 Chạm Bánh Kem - Chờ 10s để điều kỳ diệu xuất hiện nha! ✨</div>
 
-    <!-- KHUNG AVATAR CUTE -->
+    <!-- KHUNG AVATAR -->
     <div id="avatar-box">
         <div class="avatar-frame">
             <img src="namchinh.jpg" alt="Avatar Nam Chinh">
@@ -446,11 +444,13 @@
     </div>
 
     <script>
-        // KÍCH HOẠT ÂM THANH CHO IPHONE NGAY KHI CÓ CHẠM ĐẦU TIÊN
         const bgMusic = document.getElementById("bg-music");
         const voiceAudio = document.getElementById("voice-audio");
+        let audioUnlocked = false;
 
-        window.addEventListener('touchstart', function unlockAudioForIOS() {
+        // Hàm ngầm mở khóa âm thanh cho iPhone (chỉ kích hoạt quyền ngầm chứ KHÔNG PHÁT TIẾNG)
+        function prepareAudioForIOS() {
+            if (audioUnlocked) return;
             bgMusic.play().then(() => {
                 bgMusic.pause();
                 bgMusic.currentTime = 0;
@@ -459,8 +459,8 @@
                 voiceAudio.pause();
                 voiceAudio.currentTime = 0;
             }).catch(()=>{});
-            window.removeEventListener('touchstart', unlockAudioForIOS);
-        }, { once: true });
+            audioUnlocked = true;
+        }
 
         // ĐỒNG HỒ ĐẾM NGƯỢC ĐẾN 00:00 NGÀY 23/10/2026
         const targetDate = new Date("October 23, 2026 00:00:00").getTime();
@@ -777,13 +777,13 @@
             scene.add(particlesGroup);
         }
 
+        // CHỈ KHI CHẠM VÀO BÁNH KEM MỚI BẮT ĐẦU ĐẾM 10S
         function onCakeTouch(event) {
             if (isWaiting10s || isExploded) return;
 
             const raycaster = new THREE.Raycaster();
             const mouse = new THREE.Vector2();
             
-            // Xử lý tọa độ chạm chuẩn xác trên điện thoại
             const clientX = event.clientX || (event.touches && event.touches[0].clientX);
             const clientY = event.clientY || (event.touches && event.touches[0].clientY);
             if (clientX === undefined) return;
@@ -815,7 +815,7 @@
                         hintBanner.innerText = `✨ Đợi ${timeLeft}s để điều kỳ diệu xuất hiện nha... ✨`;
                     } else {
                         clearInterval(countInterval);
-                        triggerExplosionAndAudio();
+                        triggerExplosionAndAudio(); // ĐỦ 10S MỚI KÍCH HOẠT ÂM THANH & HIỆU ỨNG
                     }
                 }, 1000);
             }
@@ -844,7 +844,7 @@
             isEffectActive = true;
             skyBg.style.background = `linear-gradient(180deg, #1d3557 0%, #457b9d 50%, #2b1055 100%)`;
 
-            // Phát nhạc và giọng nói tương thích iPhone
+            // ĐÚNG THỜI ĐIỂM NÀY ÂM THANH MỚI BẮT ĐẦU PHÁT TRÊN MỌI THIẾT BỊ
             bgMusic.volume = 0.25;
             bgMusic.play().catch(() => {});
 
@@ -925,6 +925,9 @@
             const errorMsg = document.getElementById("error-msg");
 
             if (pass === "23102007") {
+                // Đánh thức quyền âm thanh ngầm cho điện thoại khi bấm nút mở thiệp
+                prepareAudioForIOS();
+
                 const overlay = document.getElementById("login-overlay");
                 overlay.style.opacity = "0";
                 setTimeout(() => {
