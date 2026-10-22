@@ -21,6 +21,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -81,7 +82,7 @@
         }
 
         .login-card {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             padding: 30px 24px;
@@ -171,16 +172,21 @@
 
         .btn-submit {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             background: linear-gradient(90deg, #ff758f, #ff4d6d);
             border: none;
-            border-radius: 18px;
+            border-radius: 20px;
             color: #ffffff;
             font-weight: bold;
-            font-size: 0.95rem;
+            font-size: 1rem;
             cursor: pointer;
             box-shadow: 0 6px 20px rgba(255, 77, 109, 0.4);
             font-family: inherit;
+            display: block;
+        }
+
+        .btn-submit:active {
+            transform: scale(0.97);
         }
 
         #error-msg {
@@ -396,7 +402,7 @@
 
             <div id="pass-container" style="opacity: 0.4; pointer-events: none;">
                 <input type="password" id="pass-input" placeholder="Đang khóa..." disabled>
-                <button class="btn-submit" id="submit-btn" disabled onclick="unlock()">Mở Thiệp Ngay ✨</button>
+                <button class="btn-submit" id="submit-btn" disabled>Chưa Đến Giờ Mở Quà ⏳</button>
                 <div id="error-msg">Mật khẩu chưa đúng rồi! (Gợi ý: 23102007)</div>
             </div>
         </div>
@@ -446,21 +452,6 @@
     <script>
         const bgMusic = document.getElementById("bg-music");
         const voiceAudio = document.getElementById("voice-audio");
-        let audioUnlocked = false;
-
-        // Hàm ngầm mở khóa âm thanh cho iPhone (chỉ kích hoạt quyền ngầm chứ KHÔNG PHÁT TIẾNG)
-        function prepareAudioForIOS() {
-            if (audioUnlocked) return;
-            bgMusic.play().then(() => {
-                bgMusic.pause();
-                bgMusic.currentTime = 0;
-            }).catch(()=>{});
-            voiceAudio.play().then(() => {
-                voiceAudio.pause();
-                voiceAudio.currentTime = 0;
-            }).catch(()=>{});
-            audioUnlocked = true;
-        }
 
         // ĐỒNG HỒ ĐẾM NGƯỢC ĐẾN 00:00 NGÀY 23/10/2026
         const targetDate = new Date("October 23, 2026 00:00:00").getTime();
@@ -486,6 +477,10 @@
                     const passInput = document.getElementById("pass-input");
                     passInput.disabled = false;
                     passInput.placeholder = "Nhập mật khẩu...";
+
+                    const submitBtn = document.getElementById("submit-btn");
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = "Mở Thiệp Ngay ✨";
                 }
                 return;
             }
@@ -815,7 +810,7 @@
                         hintBanner.innerText = `✨ Đợi ${timeLeft}s để điều kỳ diệu xuất hiện nha... ✨`;
                     } else {
                         clearInterval(countInterval);
-                        triggerExplosionAndAudio(); // ĐỦ 10S MỚI KÍCH HOẠT ÂM THANH & HIỆU ỨNG
+                        triggerExplosionAndAudio(); // ĐỦ 10S MỚI BẮT ĐẦU PHÁT ÂM THANH!
                     }
                 }, 1000);
             }
@@ -844,7 +839,7 @@
             isEffectActive = true;
             skyBg.style.background = `linear-gradient(180deg, #1d3557 0%, #457b9d 50%, #2b1055 100%)`;
 
-            // ĐÚNG THỜI ĐIỂM NÀY ÂM THANH MỚI BẮT ĐẦU PHÁT TRÊN MỌI THIẾT BỊ
+            // ĐÚNG 10 GIÂY MỚI PHÁT NHẠC VÀ GIỌNG NÓI!
             bgMusic.volume = 0.25;
             bgMusic.play().catch(() => {});
 
@@ -918,6 +913,7 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         }
 
+        // ĐĂNG NHẬP (23102007)
         function unlock() {
             if (!isTimeUp) return;
 
@@ -925,9 +921,6 @@
             const errorMsg = document.getElementById("error-msg");
 
             if (pass === "23102007") {
-                // Đánh thức quyền âm thanh ngầm cho điện thoại khi bấm nút mở thiệp
-                prepareAudioForIOS();
-
                 const overlay = document.getElementById("login-overlay");
                 overlay.style.opacity = "0";
                 setTimeout(() => {
@@ -941,6 +934,14 @@
                 errorMsg.style.display = "block";
             }
         }
+
+        // BẮT CẢ SỰ KIỆN NÚT BẤM VÀ CẢM ỨNG MÀN HÌNH ĐIỆN THOẠI
+        const submitBtn = document.getElementById("submit-btn");
+        submitBtn.addEventListener("click", unlock);
+        submitBtn.addEventListener("touchstart", function(e) {
+            e.preventDefault();
+            unlock();
+        });
 
         document.getElementById("pass-input").addEventListener("keypress", function(event) {
             if (event.key === "Enter") unlock();
