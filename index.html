@@ -363,14 +363,12 @@
 </head>
 <body>
 
-    <!-- AUDIO FILES (Được mở rộng tương thích iOS) -->
     <audio id="bg-music" src="nhacnen.mp3" loop preload="auto" playsinline></audio>
     <audio id="voice-audio" src="giong.mp3" preload="auto" playsinline></audio>
 
     <div id="sky-bg"></div>
     <canvas id="effect-canvas"></canvas>
 
-    <!-- MÀN HÌNH ĐĂNG NHẬP -->
     <div id="login-overlay">
         <div class="login-card">
             <span class="login-badge">⏰🎂</span>
@@ -435,16 +433,11 @@
     <script>
         const bgMusic = document.getElementById("bg-music");
         const voiceAudio = document.getElementById("voice-audio");
-        let audioCtx = null;
 
-        // KÍCH HOẠT QUYỀN AUDIO SAFARI SAFELY
-        function initAudioContext() {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            }
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
+        // LÀM MỚI FILE AUDIO MỖI LẦN TRUY CẬP
+        function reloadAudio() {
+            bgMusic.load();
+            voiceAudio.load();
         }
 
         const targetDate = new Date("October 23, 2026 00:00:00").getTime();
@@ -764,7 +757,7 @@
         }
 
         function onCakeTouch(event) {
-            initAudioContext();
+            reloadAudio(); // TẢI BỘ NHỚ ĐỆM ÂM THANH MỚI
             if (isWaiting10s || isExploded) return;
 
             const raycaster = new THREE.Raycaster();
@@ -904,7 +897,7 @@
         }
 
         function unlock() {
-            initAudioContext();
+            reloadAudio();
             if (!isTimeUp) return;
 
             const pass = document.getElementById("pass-input").value;
