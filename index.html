@@ -777,6 +777,10 @@
             if (intersects.length > 0) {
                 isWaiting10s = true;
 
+                // **QUAN TRỌNG CHO IPHONE**: Kích hoạt ngầm audio ngay khi chạm bánh để mở khóa quyền phát
+                bgMusic.play().then(() => { bgMusic.pause(); bgMusic.currentTime = 0; }).catch(()=>{});
+                voiceAudio.play().then(() => { voiceAudio.pause(); voiceAudio.currentTime = 0; }).catch(()=>{});
+
                 const hintBanner = document.getElementById("hint-banner");
                 let timeLeft = 10;
                 hintBanner.innerText = `✨ Đợi ${timeLeft}s để điều kỳ diệu xuất hiện nha... ✨`;
@@ -825,7 +829,7 @@
             isEffectActive = true;
             skyBg.style.background = `linear-gradient(180deg, #1d3557 0%, #457b9d 50%, #2b1055 100%)`;
 
-            // PHÁT ÂM THANH: Nhạc nền vừa (0.25), Giọng nói to (1.0)
+            // PHÁT ÂM THANH CHUẨN TRÊN IPHONE
             bgMusic.currentTime = 0;
             voiceAudio.currentTime = 0;
             bgMusic.volume = 0.25;
@@ -867,18 +871,16 @@
             };
         }
 
-        // NÚT "NGẮM LẠI BÁNH KEM 3D": RESET TOÀN BỘ VỀ BAN ĐẦU
+        // NÚT "NGẮM LẠI BÁNH KEM 3D": RESET TRẠNG THÁI
         function closeModal() {
             document.getElementById("letter-modal").classList.remove("active");
             if (fireworksInterval) clearInterval(fireworksInterval);
 
-            // Dừng hẳn nhạc và giọng nói, tua về 0
             bgMusic.pause();
             bgMusic.currentTime = 0;
             voiceAudio.pause();
             voiceAudio.currentTime = 0;
 
-            // Reset bánh kem và hiệu ứng về trạng thái ban đầu
             gsap.to(cakeGroup.scale, { x: 1, y: 1, z: 1, duration: 1, ease: "elastic.out(1, 0.5)" });
             const pSystem = particlesGroup.children[0];
             pSystem.material.opacity = 0;
@@ -914,6 +916,10 @@
         }
 
         function unlock() {
+            // **QUAN TRỌNG CHO IPHONE**: Kích hoạt ngầm audio ngay khi bấm nút mở thiệp
+            bgMusic.play().then(() => { bgMusic.pause(); bgMusic.currentTime = 0; }).catch(()=>{});
+            voiceAudio.play().then(() => { voiceAudio.pause(); voiceAudio.currentTime = 0; }).catch(()=>{});
+
             if (!isTimeUp) return;
 
             const pass = document.getElementById("pass-input").value;
