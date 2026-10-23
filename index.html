@@ -433,14 +433,23 @@
     <script>
         const bgMusic = document.getElementById("bg-music");
         const voiceAudio = document.getElementById("voice-audio");
-        let hasTriggeredAudio = false;
+        let audioContext = null;
 
-        document.addEventListener("visibilitychange", function() {
-            if (!document.hidden && hasTriggeredAudio) {
-                if (bgMusic.paused) bgMusic.play().catch(()=>{});
-                if (voiceAudio.paused && !voiceAudio.ended) voiceAudio.play().catch(()=>{});
+        // GIỮ KẾT NỐI KÍCH HOẠT LOA / TAI NGHE BLUETOOTH LIÊN TỤC TRÊN IPHONE
+        function activateAudioContext() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
             }
-        });
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+            // Kích hoạt silent buffer giữ kết nối bluetooth không bị ngắt
+            const buffer = audioContext.createBuffer(1, 1, 22050);
+            const source = audioContext.createBufferSource();
+            source.buffer = buffer;
+            source.connect(audioContext.destination);
+            source.start(0);
+        }
 
         const targetDate = new Date("October 23, 2026 00:00:00").getTime();
         let isTimeUp = false;
@@ -759,6 +768,7 @@
         }
 
         function onCakeTouch(event) {
+            activateAudioContext();
             if (isWaiting10s || isExploded) return;
 
             const raycaster = new THREE.Raycaster();
@@ -777,9 +787,9 @@
             if (intersects.length > 0) {
                 isWaiting10s = true;
 
-                // **QUAN TRỌNG CHO IPHONE**: Kích hoạt ngầm audio ngay khi chạm bánh để mở khóa quyền phát
-                bgMusic.play().then(() => { bgMusic.pause(); bgMusic.currentTime = 0; }).catch(()=>{});
-                voiceAudio.play().then(() => { voiceAudio.pause(); voiceAudio.currentTime = 0; }).catch(()=>{});
+                // Chuẩn bị âm thanh sẵn sàng trong RAM
+                bgMusic.play().then(() => { bgMusic.pause(); }).catch(()=>{});
+                voiceAudio.play().then(() => { voiceAudio.pause(); }).catch(()=>{});
 
                 const hintBanner = document.getElementById("hint-banner");
                 let timeLeft = 10;
@@ -807,7 +817,6 @@
 
         function triggerExplosionAndAudio() {
             isExploded = true;
-            hasTriggeredAudio = true;
             document.getElementById("hint-banner").style.display = "none";
 
             gsap.killTweensOf(cakeGroup.position);
@@ -829,14 +838,14 @@
             isEffectActive = true;
             skyBg.style.background = `linear-gradient(180deg, #1d3557 0%, #457b9d 50%, #2b1055 100%)`;
 
-            // PHÁT ÂM THANH CHUẨN TRÊN IPHONE
+            // PHÁT ĐỒNG THỜI ÂM THANH MƯỢT MÀ TRÊN IPHONE & BLUETOOTH
             bgMusic.currentTime = 0;
             voiceAudio.currentTime = 0;
             bgMusic.volume = 0.25;
-            bgMusic.play().catch(e => console.log(e));
-
             voiceAudio.volume = 1.0;
-            voiceAudio.play().catch(e => console.log(e));
+
+            bgMusic.play().catch(e => console.log("BG Audio err:", e));
+            voiceAudio.play().catch(e => console.log("Voice Audio err:", e));
 
             document.getElementById("avatar-box").classList.add("active");
 
@@ -871,7 +880,6 @@
             };
         }
 
-        // NÚT "NGẮM LẠI BÁNH KEM 3D": RESET TRẠNG THÁI
         function closeModal() {
             document.getElementById("letter-modal").classList.remove("active");
             if (fireworksInterval) clearInterval(fireworksInterval);
@@ -916,9 +924,7 @@
         }
 
         function unlock() {
-            // **QUAN TRỌNG CHO IPHONE**: Kích hoạt ngầm audio ngay khi bấm nút mở thiệp
-            bgMusic.play().then(() => { bgMusic.pause(); bgMusic.currentTime = 0; }).catch(()=>{});
-            voiceAudio.play().then(() => { voiceAudio.pause(); voiceAudio.currentTime = 0; }).catch(()=>{});
+            activateAudioContext();
 
             if (!isTimeUp) return;
 
