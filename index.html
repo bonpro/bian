@@ -825,7 +825,9 @@
             isEffectActive = true;
             skyBg.style.background = `linear-gradient(180deg, #1d3557 0%, #457b9d 50%, #2b1055 100%)`;
 
-            // 1. NHẠC NỀN ĐỂ MỨC VỪA PHẢI (0.25) ĐỂ LÀM NỀN, GIỌNG NÓI RÕ TO (1.0)
+            // PHÁT ÂM THANH: Nhạc nền vừa (0.25), Giọng nói to (1.0)
+            bgMusic.currentTime = 0;
+            voiceAudio.currentTime = 0;
             bgMusic.volume = 0.25;
             bgMusic.play().catch(e => console.log(e));
 
@@ -834,7 +836,6 @@
 
             document.getElementById("avatar-box").classList.add("active");
 
-            // 2. KHI GIỌNG NÓI KẾT THÚ: Nhạc nền bùng nổ to rõ (0.85) + Pháo hoa + Bức thư
             voiceAudio.onended = () => {
                 gsap.to(bgMusic, { volume: 0.85, duration: 2.0 });
                 document.getElementById("avatar-box").classList.remove("active");
@@ -866,20 +867,32 @@
             };
         }
 
+        // NÚT "NGẮM LẠI BÁNH KEM 3D": RESET TOÀN BỘ VỀ BAN ĐẦU
         function closeModal() {
             document.getElementById("letter-modal").classList.remove("active");
             if (fireworksInterval) clearInterval(fireworksInterval);
 
+            // Dừng hẳn nhạc và giọng nói, tua về 0
+            bgMusic.pause();
+            bgMusic.currentTime = 0;
+            voiceAudio.pause();
+            voiceAudio.currentTime = 0;
+
+            // Reset bánh kem và hiệu ứng về trạng thái ban đầu
             gsap.to(cakeGroup.scale, { x: 1, y: 1, z: 1, duration: 1, ease: "elastic.out(1, 0.5)" });
             const pSystem = particlesGroup.children[0];
             pSystem.material.opacity = 0;
+            
             isWaiting10s = false;
             isExploded = false;
             isEffectActive = false;
             isFormingLetter = false;
+            
             skyBg.style.background = `linear-gradient(180deg, #ff9a9e 0%, #fecfef 50%, #a1c4fd 100%)`;
-            document.getElementById("hint-banner").innerText = "👆 Chạm Bánh Kem - Chờ 10s để điều kỳ diệu xuất hiện nha! ✨";
-            document.getElementById("hint-banner").style.display = "block";
+            
+            const hintBanner = document.getElementById("hint-banner");
+            hintBanner.innerText = "👆 Chạm Bánh Kem - Chờ 10s để điều kỳ diệu xuất hiện nha! ✨";
+            hintBanner.style.display = "block";
         }
 
         function animate3D(time) {
