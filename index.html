@@ -435,7 +435,6 @@
         const voiceAudio = document.getElementById("voice-audio");
         let hasTriggeredAudio = false;
 
-        // CHỐNG MẤT ÂM THANH KHI TẮT/MỞ KHÓA MÀN HÌNH HOẶC CHUYỂN TAB
         document.addEventListener("visibilitychange", function() {
             if (!document.hidden && hasTriggeredAudio) {
                 if (bgMusic.paused) bgMusic.play().catch(()=>{});
@@ -826,8 +825,8 @@
             isEffectActive = true;
             skyBg.style.background = `linear-gradient(180deg, #1d3557 0%, #457b9d 50%, #2b1055 100%)`;
 
-            // 1. NHẠC NỀN HẠ CỰC NHỎ (0.02) ĐỂ NỔI BẬT HOÀN TOÀN GIỌNG NÓI (1.0)
-            bgMusic.volume = 0.02;
+            // 1. NHẠC NỀN ĐỂ MỨC VỪA PHẢI (0.25) ĐỂ LÀM NỀN, GIỌNG NÓI RÕ TO (1.0)
+            bgMusic.volume = 0.25;
             bgMusic.play().catch(e => console.log(e));
 
             voiceAudio.volume = 1.0;
@@ -835,7 +834,7 @@
 
             document.getElementById("avatar-box").classList.add("active");
 
-            // 2. KHI GIỌNG NÓI KẾT THÚ: Nhạc nền to lên bùng nổ (0.85) + Pháo hoa + Bức thư
+            // 2. KHI GIỌNG NÓI KẾT THÚ: Nhạc nền bùng nổ to rõ (0.85) + Pháo hoa + Bức thư
             voiceAudio.onended = () => {
                 gsap.to(bgMusic, { volume: 0.85, duration: 2.0 });
                 document.getElementById("avatar-box").classList.remove("active");
