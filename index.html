@@ -433,11 +433,7 @@
     <script>
         const bgMusic = document.getElementById("bg-music");
         const voiceAudio = document.getElementById("voice-audio");
-
-        function reloadAudio() {
-            bgMusic.load();
-            voiceAudio.load();
-        }
+        let isAudioPlaying = false;
 
         const targetDate = new Date("October 23, 2026 00:00:00").getTime();
         let isTimeUp = false;
@@ -756,7 +752,6 @@
         }
 
         function onCakeTouch(event) {
-            reloadAudio();
             if (isWaiting10s || isExploded) return;
 
             const raycaster = new THREE.Raycaster();
@@ -801,6 +796,7 @@
 
         function triggerExplosionAndAudio() {
             isExploded = true;
+            isAudioPlaying = true;
             document.getElementById("hint-banner").style.display = "none";
 
             gsap.killTweensOf(cakeGroup.position);
@@ -822,8 +818,8 @@
             isEffectActive = true;
             skyBg.style.background = `linear-gradient(180deg, #1d3557 0%, #457b9d 50%, #2b1055 100%)`;
 
-            // 1. KHI ĐỦ 10S: Nhạc nền mở nhỏ (0.15) để nghe rõ giọng nói lớn (1.0)
-            bgMusic.volume = 0.15;
+            // 1. NHẠC NỀN CHỈ PHÁT SIÊU NHỎ (0.05) ĐỂ TẬP TRUNG HOÀN TOÀN VÀO GIỌNG NÓI (1.0)
+            bgMusic.volume = 0.05;
             bgMusic.play().catch(e => console.log(e));
 
             voiceAudio.volume = 1.0;
@@ -831,9 +827,9 @@
 
             document.getElementById("avatar-box").classList.add("active");
 
-            // 2. KHI GIỌNG NÓI KẾT THÚ: Nhạc nền to lên rực rỡ (0.75), bật pháo hoa & hiện bức thư
+            // 2. KHI GIỌNG NÓI NÓI XONG: Nhạc nền mới to lên rõ ràng (0.80) & hiện pháo hoa + bức thư
             voiceAudio.onended = () => {
-                gsap.to(bgMusic, { volume: 0.75, duration: 1.5 });
+                gsap.to(bgMusic, { volume: 0.80, duration: 2.0 });
                 document.getElementById("avatar-box").classList.remove("active");
 
                 isFormingLetter = true;
@@ -898,7 +894,10 @@
         }
 
         function unlock() {
-            reloadAudio();
+            if (!isAudioPlaying) {
+                bgMusic.load();
+                voiceAudio.load();
+            }
             if (!isTimeUp) return;
 
             const pass = document.getElementById("pass-input").value;
