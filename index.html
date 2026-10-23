@@ -434,7 +434,6 @@
         const bgMusic = document.getElementById("bg-music");
         const voiceAudio = document.getElementById("voice-audio");
 
-        // LÀM MỚI FILE AUDIO MỖI LẦN TRUY CẬP
         function reloadAudio() {
             bgMusic.load();
             voiceAudio.load();
@@ -757,7 +756,7 @@
         }
 
         function onCakeTouch(event) {
-            reloadAudio(); // TẢI BỘ NHỚ ĐỆM ÂM THANH MỚI
+            reloadAudio();
             if (isWaiting10s || isExploded) return;
 
             const raycaster = new THREE.Raycaster();
@@ -823,7 +822,8 @@
             isEffectActive = true;
             skyBg.style.background = `linear-gradient(180deg, #1d3557 0%, #457b9d 50%, #2b1055 100%)`;
 
-            bgMusic.volume = 0.25;
+            // 1. KHI ĐỦ 10S: Nhạc nền mở nhỏ (0.15) để nghe rõ giọng nói lớn (1.0)
+            bgMusic.volume = 0.15;
             bgMusic.play().catch(e => console.log(e));
 
             voiceAudio.volume = 1.0;
@@ -831,8 +831,9 @@
 
             document.getElementById("avatar-box").classList.add("active");
 
+            // 2. KHI GIỌNG NÓI KẾT THÚ: Nhạc nền to lên rực rỡ (0.75), bật pháo hoa & hiện bức thư
             voiceAudio.onended = () => {
-                gsap.to(bgMusic, { volume: 0.65, duration: 1.5 });
+                gsap.to(bgMusic, { volume: 0.75, duration: 1.5 });
                 document.getElementById("avatar-box").classList.remove("active");
 
                 isFormingLetter = true;
