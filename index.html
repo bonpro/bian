@@ -777,12 +777,6 @@
             if (intersects.length > 0) {
                 isWaiting10s = true;
 
-                // **TẢI NGẦM TRƯỚC (PRELOAD)**: Ép iPhone nạp sẵn âm thanh vào bộ nhớ từ giây này, KHÔNG PHÁT RA LOA VỘI
-                bgMusic.load();
-                voiceAudio.load();
-                bgMusic.volume = 0.25;
-                voiceAudio.volume = 1.0;
-
                 const hintBanner = document.getElementById("hint-banner");
                 let timeLeft = 10;
                 hintBanner.innerText = `✨ Đợi ${timeLeft}s để điều kỳ diệu xuất hiện nha... ✨`;
@@ -801,7 +795,7 @@
                         hintBanner.innerText = `✨ Đợi ${timeLeft}s để điều kỳ diệu xuất hiện nha... ✨`;
                     } else {
                         clearInterval(countInterval);
-                        triggerExplosionAndAudio(); // ĐÚNG TRÒN 10S MỚI PHÁT RA LOA
+                        triggerExplosionAndAudio(); // ĐÚNG TRÒN 10S MỚI KÍCH HOẠT VÀ PHÁT LOA
                     }
                 }, 1000);
             }
@@ -831,9 +825,11 @@
             isEffectActive = true;
             skyBg.style.background = `linear-gradient(180deg, #1d3557 0%, #457b9d 50%, #2b1055 100%)`;
 
-            // BẮT ĐẦU PHÁT CHÍNH XÁC KHI ĐỦ 10S
+            // PHÁT ÂM THANH CHÍNH XÁC KHI ĐỦ 10S
             bgMusic.currentTime = 0;
             voiceAudio.currentTime = 0;
+            bgMusic.volume = 0.25;
+            voiceAudio.volume = 1.0;
             bgMusic.play().catch(e => console.log(e));
             voiceAudio.play().catch(e => console.log(e));
 
@@ -914,10 +910,7 @@
         }
 
         function unlock() {
-            // Đánh thức audio context ngay lúc bấm mở thiệp
-            bgMusic.play().then(() => { bgMusic.pause(); bgMusic.currentTime = 0; }).catch(()=>{});
-            voiceAudio.play().then(() => { voiceAudio.pause(); voiceAudio.currentTime = 0; }).catch(()=>{});
-
+            // ĐÃ XÓA SẠCH LỆNH PHÁT ÂM THANH Ở ĐÂY ĐỂ TRÁNH BỊ LỖI SPAM
             if (!isTimeUp) return;
 
             const pass = document.getElementById("pass-input").value;
