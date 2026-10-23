@@ -420,12 +420,12 @@
 
     <div id="letter-modal">
         <div class="letter-modal-content">
-            <h3>Gửi Chị ! 💕</h3>
+            <h3>Gửi Chị Đoàn Thị Mỹ Duyên! 💕</h3>
             <p>Chắc hẳn chị vừa nghe xong những lời chia sẻ từ đáy lòng của em rồi đúng không nào? 🥰</p>
             <p>Bức thư nhỏ này là lời nhắn gửi tiếp thêm sức mạnh cho chị. Hành trình sắp tới dù có nhiều thử thách hay những cột mốc mới, mong chị hãy luôn vững tin, kiên cường và mỉm cười thật tươi như cách chị vẫn luôn tỏa sáng nhé!</p>
             <p>Nãy em có chúc chị sớm có người yêu để năm sau đón sinh nhật cùng người ấy... Lỡ đâu người đó lại chính là em đón cùng chị thì sao nhỉ? Chắc đó sẽ là một điều gì đó em chưa bao giờ dám nghĩ tới luôn haha! 😉🌸</p>
             <p>Dù sao đi nữa, hãy nhớ rằng phía sau chị luôn có sự ủng hộ, đồng hành và những tình cảm ấm áp nhất. Chúc chị tuổi mới thật vững vàng, tràn ngập may mắn và gặt hái trọn vẹn những giấc mơ của mình! ✨✨</p>
-            <div class="letter-signature">người gửi giấu tên</div>
+            <div class="letter-signature">Thân gửi từ em ✨💖</div>
             <button class="close-btn" onclick="closeModal()">🔄 Ngắm Lại Bánh Kem 3D</button>
         </div>
     </div>
@@ -433,23 +433,14 @@
     <script>
         const bgMusic = document.getElementById("bg-music");
         const voiceAudio = document.getElementById("voice-audio");
-        let audioContext = null;
+        let hasTriggeredAudio = false;
 
-        // GIỮ KẾT NỐI KÍCH HOẠT LOA / TAI NGHE BLUETOOTH LIÊN TỤC TRÊN IPHONE
-        function activateAudioContext() {
-            if (!audioContext) {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        document.addEventListener("visibilitychange", function() {
+            if (!document.hidden && hasTriggeredAudio) {
+                if (bgMusic.paused) bgMusic.play().catch(()=>{});
+                if (voiceAudio.paused && !voiceAudio.ended) voiceAudio.play().catch(()=>{});
             }
-            if (audioContext.state === 'suspended') {
-                audioContext.resume();
-            }
-            // Kích hoạt silent buffer giữ kết nối bluetooth không bị ngắt
-            const buffer = audioContext.createBuffer(1, 1, 22050);
-            const source = audioContext.createBufferSource();
-            source.buffer = buffer;
-            source.connect(audioContext.destination);
-            source.start(0);
-        }
+        });
 
         const targetDate = new Date("October 23, 2026 00:00:00").getTime();
         let isTimeUp = false;
@@ -768,7 +759,6 @@
         }
 
         function onCakeTouch(event) {
-            activateAudioContext();
             if (isWaiting10s || isExploded) return;
 
             const raycaster = new THREE.Raycaster();
@@ -787,9 +777,11 @@
             if (intersects.length > 0) {
                 isWaiting10s = true;
 
-                // Chuẩn bị âm thanh sẵn sàng trong RAM
-                bgMusic.play().then(() => { bgMusic.pause(); }).catch(()=>{});
-                voiceAudio.play().then(() => { voiceAudio.pause(); }).catch(()=>{});
+                // **TẢI NGẦM TRƯỚC (PRELOAD)**: Ép iPhone nạp sẵn âm thanh vào bộ nhớ từ giây này, KHÔNG PHÁT RA LOA VỘI
+                bgMusic.load();
+                voiceAudio.load();
+                bgMusic.volume = 0.25;
+                voiceAudio.volume = 1.0;
 
                 const hintBanner = document.getElementById("hint-banner");
                 let timeLeft = 10;
@@ -809,7 +801,7 @@
                         hintBanner.innerText = `✨ Đợi ${timeLeft}s để điều kỳ diệu xuất hiện nha... ✨`;
                     } else {
                         clearInterval(countInterval);
-                        triggerExplosionAndAudio();
+                        triggerExplosionAndAudio(); // ĐÚNG TRÒN 10S MỚI PHÁT RA LOA
                     }
                 }, 1000);
             }
@@ -817,6 +809,7 @@
 
         function triggerExplosionAndAudio() {
             isExploded = true;
+            hasTriggeredAudio = true;
             document.getElementById("hint-banner").style.display = "none";
 
             gsap.killTweensOf(cakeGroup.position);
@@ -838,14 +831,11 @@
             isEffectActive = true;
             skyBg.style.background = `linear-gradient(180deg, #1d3557 0%, #457b9d 50%, #2b1055 100%)`;
 
-            // PHÁT ĐỒNG THỜI ÂM THANH MƯỢT MÀ TRÊN IPHONE & BLUETOOTH
+            // BẮT ĐẦU PHÁT CHÍNH XÁC KHI ĐỦ 10S
             bgMusic.currentTime = 0;
             voiceAudio.currentTime = 0;
-            bgMusic.volume = 0.25;
-            voiceAudio.volume = 1.0;
-
-            bgMusic.play().catch(e => console.log("BG Audio err:", e));
-            voiceAudio.play().catch(e => console.log("Voice Audio err:", e));
+            bgMusic.play().catch(e => console.log(e));
+            voiceAudio.play().catch(e => console.log(e));
 
             document.getElementById("avatar-box").classList.add("active");
 
@@ -924,7 +914,9 @@
         }
 
         function unlock() {
-            activateAudioContext();
+            // Đánh thức audio context ngay lúc bấm mở thiệp
+            bgMusic.play().then(() => { bgMusic.pause(); bgMusic.currentTime = 0; }).catch(()=>{});
+            voiceAudio.play().then(() => { voiceAudio.pause(); voiceAudio.currentTime = 0; }).catch(()=>{});
 
             if (!isTimeUp) return;
 
