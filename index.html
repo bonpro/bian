@@ -433,7 +433,15 @@
     <script>
         const bgMusic = document.getElementById("bg-music");
         const voiceAudio = document.getElementById("voice-audio");
-        let isAudioPlaying = false;
+        let hasTriggeredAudio = false;
+
+        // CHỐNG MẤT ÂM THANH KHI TẮT/MỞ KHÓA MÀN HÌNH HOẶC CHUYỂN TAB
+        document.addEventListener("visibilitychange", function() {
+            if (!document.hidden && hasTriggeredAudio) {
+                if (bgMusic.paused) bgMusic.play().catch(()=>{});
+                if (voiceAudio.paused && !voiceAudio.ended) voiceAudio.play().catch(()=>{});
+            }
+        });
 
         const targetDate = new Date("October 23, 2026 00:00:00").getTime();
         let isTimeUp = false;
@@ -796,7 +804,7 @@
 
         function triggerExplosionAndAudio() {
             isExploded = true;
-            isAudioPlaying = true;
+            hasTriggeredAudio = true;
             document.getElementById("hint-banner").style.display = "none";
 
             gsap.killTweensOf(cakeGroup.position);
@@ -818,8 +826,8 @@
             isEffectActive = true;
             skyBg.style.background = `linear-gradient(180deg, #1d3557 0%, #457b9d 50%, #2b1055 100%)`;
 
-            // 1. NHẠC NỀN CHỈ PHÁT SIÊU NHỎ (0.05) ĐỂ TẬP TRUNG HOÀN TOÀN VÀO GIỌNG NÓI (1.0)
-            bgMusic.volume = 0.05;
+            // 1. NHẠC NỀN HẠ CỰC NHỎ (0.02) ĐỂ NỔI BẬT HOÀN TOÀN GIỌNG NÓI (1.0)
+            bgMusic.volume = 0.02;
             bgMusic.play().catch(e => console.log(e));
 
             voiceAudio.volume = 1.0;
@@ -827,9 +835,9 @@
 
             document.getElementById("avatar-box").classList.add("active");
 
-            // 2. KHI GIỌNG NÓI NÓI XONG: Nhạc nền mới to lên rõ ràng (0.80) & hiện pháo hoa + bức thư
+            // 2. KHI GIỌNG NÓI KẾT THÚ: Nhạc nền to lên bùng nổ (0.85) + Pháo hoa + Bức thư
             voiceAudio.onended = () => {
-                gsap.to(bgMusic, { volume: 0.80, duration: 2.0 });
+                gsap.to(bgMusic, { volume: 0.85, duration: 2.0 });
                 document.getElementById("avatar-box").classList.remove("active");
 
                 isFormingLetter = true;
@@ -894,10 +902,6 @@
         }
 
         function unlock() {
-            if (!isAudioPlaying) {
-                bgMusic.load();
-                voiceAudio.load();
-            }
             if (!isTimeUp) return;
 
             const pass = document.getElementById("pass-input").value;
